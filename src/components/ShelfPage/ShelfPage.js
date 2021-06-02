@@ -1,14 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 
 
 function ShelfPage() {
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
+  const dispatch = useDispatch();
 
   const addItem = event => {
-    const dispatch = useDispatch();
 
     dispatch({
       type: 'ADD_ITEM',
@@ -36,7 +37,7 @@ function ShelfPage() {
 
         <input
           required
-          value={image_url}
+          value={url}
           type="text"
           placeholder="Item URL"
           onChange={(event) => setUrl(event.target.value)}>
