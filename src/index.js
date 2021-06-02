@@ -20,9 +20,9 @@ const middlewareList = process.env.NODE_ENV === 'development' ?
   [sagaMiddleware];
 
 // create a watcher saga
-function* watcherSaga() {
-  yield takeEvery('ADD_ITEM', addItem);
-}
+// function* watcherSaga() {
+//   yield takeEvery('ADD_ITEM', addItem);
+// }
 
 // add item saga
 function* addItem(action) {
@@ -30,7 +30,7 @@ function* addItem(action) {
 
   try {
     yield axios.post('/api/shelf', action.payload);
-    yield put({ type: 'FETCH_ITEM' });
+    yield put({ type: 'FETCH_SHELF' });
   } catch (error) {
     console.log('Error in adding new item', error);
   }

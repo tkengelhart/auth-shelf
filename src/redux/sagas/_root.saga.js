@@ -1,4 +1,4 @@
-import { all } from 'redux-saga/effects';
+import { all, takeEvery, put } from 'redux-saga/effects';
 import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
@@ -16,4 +16,5 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
   ]);
+  yield takeEvery('ADD_ITEM', addItem)
 }
