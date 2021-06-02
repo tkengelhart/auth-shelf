@@ -19,6 +19,23 @@ const middlewareList = process.env.NODE_ENV === 'development' ?
   [sagaMiddleware, logger] :
   [sagaMiddleware];
 
+// create a watcher saga
+function* watcherSaga() {
+  yield takeEvery('ADD_ITEM', addItem);
+}
+
+// add item saga
+function* addItem(action) {
+  console.log('in addItem', action);
+
+  try {
+    yield axios.post('/api/shelf', action.payload);
+    yield put({ type: 'FETCH_ITEM' });
+  } catch (error) {
+    console.log('Error in adding new item', error);
+  }
+}
+
 const store = createStore(
   // tells the saga middleware to use the rootReducer
   // rootSaga contains all of our other reducers

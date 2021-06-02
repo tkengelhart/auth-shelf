@@ -14,6 +14,23 @@ router.get('/', (req, res) => {
  */
 router.post('/', (req, res) => {
   // endpoint functionality
+  console.log(req.body);
+  const insertItem = `INSERT INTO "item" ("description", "image_url") VALUES ($1, $2) RETURNING "user_id"`
+
+  // create our pool
+  pool
+    .query(insertItem, [req.body.description, req.body.image_url])
+    .then((result) => {
+      console.log('New item:', result.rows)
+
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log('Error in adding item', error);
+      res.sendStatus(500);
+    })
+
+
 });
 
 /**
