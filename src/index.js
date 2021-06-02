@@ -29,7 +29,7 @@ function* addItem(action) {
   console.log('in addItem', action);
 
   try {
-    yield axios.post('/api/shelf', action.payload);
+    yield axios.post('/api/shelf', { item: action.payload });
     yield put({ type: 'FETCH_SHELF' });
   } catch (error) {
     console.log('Error in adding new item', error);
