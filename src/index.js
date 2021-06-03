@@ -24,17 +24,6 @@ const middlewareList = process.env.NODE_ENV === 'development' ?
 //   yield takeEvery('ADD_ITEM', addItem);
 // }
 
-// add item saga
-function* addItem(action) {
-  console.log('in addItem', action);
-
-  try {
-    yield axios.post('/api/shelf', { item: action.payload });
-    yield put({ type: 'FETCH_SHELF' });
-  } catch (error) {
-    console.log('Error in adding new item', error);
-  }
-}
 
 const store = createStore(
   // tells the saga middleware to use the rootReducer
