@@ -9,6 +9,7 @@ function ShelfPage() {
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
   const dispatch = useDispatch();
+  const current_user = useSelector(store => store.user);
 
   useEffect(() => {
     dispatch({
@@ -27,6 +28,22 @@ function ShelfPage() {
       }
     })
 
+    setDescription('');
+    setUrl('');
+
+  }
+
+  const deleteButton = (itemID) => {
+    // Create functionality to delete
+    // dispatch with a payload including itemID
+    // Need to include the authentication somewhere
+
+    // console.log(data);
+
+    dispatch({
+      type: 'DELETE_ITEM',
+      payload: itemID
+    })
   }
 
 
@@ -53,11 +70,12 @@ function ShelfPage() {
         <button onClick={(event) => addItem(event)}>Add Item</button>
       </form>
 
-      {shelf ?
+      {shelf.length > 0 ?
         shelf.map(item => 
         (<div key={item.id}>
         <img src={item.image_url} />
         <div>{item.description}</div>
+        {current_user.id === item.user_id && <button onClick={(event) => deleteButton(item.id)}>DELETE</button>}
         </div>))
         :
         <p>Your shelf is empty</p>}
