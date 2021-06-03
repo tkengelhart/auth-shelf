@@ -5,8 +5,15 @@ const router = express.Router();
 /**
  * Get all of the items on the shelf
  */
-router.get('/', (req, res) => {
-  res.sendStatus(200); // For testing only, can be removed
+ router.get('/', (req, res) => {
+  const qryText = `
+  SELECT * FROM "item";`;
+  pool.query(qryText).then((response) => {
+    console.log('Items in DB', response.rows);
+    res.send(response.rows);
+  }).catch((error) => {
+    console.log('Error in GET req to DB', error);
+  })
 });
 
 /**

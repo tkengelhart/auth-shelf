@@ -1,13 +1,21 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 
 
 
 function ShelfPage() {
+  const shelf = useSelector(store => store.shelf);
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_SHELF'
+    })
+  }, [])
+
 
   const addItem = event => {
 
@@ -44,6 +52,16 @@ function ShelfPage() {
         </input>
         <button onClick={(event) => addItem(event)}>Add Item</button>
       </form>
+
+      {shelf ?
+        shelf.map(item => 
+        (<div key={item.id}>
+        <img src={item.image_url} />
+        <div>{item.description}</div>
+        </div>))
+        :
+        <p>Your shelf is empty</p>}
+
     </div>
   );
 }
